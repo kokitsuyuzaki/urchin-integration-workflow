@@ -1,6 +1,5 @@
 .DS_Store
 *.sh.*
-.wget-hsts
 
 *.log
 */*.log

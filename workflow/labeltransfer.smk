@@ -17,7 +17,7 @@ rule all:
         expand('output/{q}_vs_{r}/predictions.RData',
             q=QRY_SAMPLES, r=REF_SAMPLES)
 
-rule labeltransfer2:
+rule labeltransfer:
     input:
         '../urchin-workflow2/output/echinobase/{q}/seurat_lt.RData',
         'data/{r}/seurat.RData'

@@ -5,19 +5,19 @@ This workflow consists of four workflows as follows:
 
 - **workflow/download.smk**: Data downloading
 
-![](https://github.com/kokitsuyuzaki/urchin-workflow2/blob/main/plot/download.png?raw=true)
+![](https://github.com/kokitsuyuzaki/urchin-integration-workflow/blob/main/plot/download.png?raw=true)
 
 - **workflow/preprocess.smk**: Data preprocessing
 
-![](https://github.com/kokitsuyuzaki/urchin-workflow2/blob/main/plot/preprocess.png?raw=true)
+![](https://github.com/kokitsuyuzaki/urchin-integration-workflow/blob/main/plot/preprocess.png?raw=true)
 
 - **workflow/labeltranser.smk**: Transfer label of reference to query
 
-![](https://github.com/kokitsuyuzaki/urchin-workflow2/blob/main/plot/labeltransfer.png?raw=true)
+![](https://github.com/kokitsuyuzaki/urchin-integration-workflow/blob/main/plot/labeltransfer.png?raw=true)
 
 - **workflow/plot.smk**: Plots cells with transfered label
 
-![](https://github.com/kokitsuyuzaki/urchin-workflow2/blob/main/plot/plot.png?raw=true)
+![](https://github.com/kokitsuyuzaki/urchin-integration-workflow/blob/main/plot/plot.png?raw=true)
 
 ## Requirements
 - Bash: GNU bash, version 4.2.46(1)-release (x86_64-redhat-linux-gnu)

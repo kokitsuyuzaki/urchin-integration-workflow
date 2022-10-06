@@ -10,7 +10,7 @@ container: 'docker://koki/urchin_workflow_seurat:20221004'
 QRY_SAMPLES = ['SeaUrchin-scRNA-01', 'SeaUrchin-scRNA-02', 'SeaUrchin-scRNA-03',
     'SeaUrchin-scRNA-04', 'SeaUrchin-scRNA-05', 'SeaUrchin-scRNA-06',
     'SeaUrchin-scRNA-07', 'SeaUrchin-scRNA-08']
-REF_SAMPLES = ['Sp_3dpf', 'Sp_2.75-28hpf', 'Sp_48_72hpf']
+REF_SAMPLES = ['Sp_3dpf', 'Sp_2.75-28hpf', 'Sp_48_72hpf', 'Sp_Adult']
 
 rule all:
     input:

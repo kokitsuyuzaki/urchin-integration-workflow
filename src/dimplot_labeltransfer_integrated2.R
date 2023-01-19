@@ -5,6 +5,9 @@ db <- commandArgs(trailingOnly=TRUE)[1]
 rsample <- commandArgs(trailingOnly=TRUE)[2]
 outfile <- commandArgs(trailingOnly=TRUE)[3]
 
+# Color map of reference sample
+cols <- .colorList[[rsample]]
+
 # Loading
 celltypes <- c()
 for(i in seq_along(qsamples2)){
@@ -23,5 +26,5 @@ seurat.integrated[["predicted.id"]] <- celltypes
 
 # Plot
 png(file=outfile, width=1200, height=600)
-DimPlot(seurat.integrated, reduction="umap", group.by="predicted.id", split.by="sample", pt.size=2, label.size=6, ncol=4)
+DimPlot(seurat.integrated, reduction="umap", group.by="predicted.id", split.by="sample", pt.size=2, label.size=6, ncol=4, cols=cols)
 dev.off()

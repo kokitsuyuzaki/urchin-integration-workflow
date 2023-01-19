@@ -15,3 +15,8 @@ output
 report
 logs
 benchmarks
+plot/cont-*
+plot/DAPT-*
+plot/SeaUrchin-*
+plot/integrated
+plot/Sp_*

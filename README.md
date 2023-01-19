@@ -11,9 +11,13 @@ This workflow consists of four workflows as follows:
 
 ![](https://github.com/kokitsuyuzaki/urchin-integration-workflow/blob/main/plot/preprocess.png?raw=true)
 
-- **workflow/labeltranser.smk**: Transfer label of reference to query
+- **workflow/labeltransfer.smk**: Transfer label of reference to query
 
 ![](https://github.com/kokitsuyuzaki/urchin-integration-workflow/blob/main/plot/labeltransfer.png?raw=true)
+
+- **workflow/integration.smk**: Integration of reference and query
+
+![](https://github.com/kokitsuyuzaki/urchin-integration-workflow/blob/main/plot/integration.png?raw=true)
 
 - **workflow/plot.smk**: Plots cells with transfered label
 
@@ -31,6 +35,7 @@ This workflow consists of four workflows as follows:
 snakemake -s workflow/download.smk -j 4 --use-singularity
 snakemake -s workflow/preprocess.smk -j 4 --use-singularity
 snakemake -s workflow/labeltransfer.smk -j 4 --use-singularity
+snakemake -s workflow/integration.smk -j 4 --use-singularity
 snakemake -s workflow/plot.smk -j 4 --use-singularity
 ```
 
@@ -40,6 +45,7 @@ snakemake -s workflow/plot.smk -j 4 --use-singularity
 snakemake -s workflow/download.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
 snakemake -s workflow/preprocess.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
 snakemake -s workflow/labeltransfer.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
+snakemake -s workflow/integration.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
 snakemake -s workflow/plot.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
 ```
 
@@ -49,6 +55,7 @@ snakemake -s workflow/plot.smk -j 32 --cluster qsub --latency-wait 600 --use-sin
 snakemake -s workflow/download.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
 snakemake -s workflow/preprocess.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
 snakemake -s workflow/labeltransfer.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
+snakemake -s workflow/integration.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
 snakemake -s workflow/plot.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
 ```
 

@@ -25,6 +25,10 @@ rule all:
             q=QRY_SAMPLES, r=REF_SAMPLES),
         expand('plot/{q2}/{r}.png',
             q2=QRY_SAMPLES2, r=REF_SAMPLES),
+        expand('plot/{q}/{r}_integration.png',
+            q=QRY_SAMPLES, r=REF_SAMPLES),
+        expand('plot/{q2}/{r}_integration.png',
+            q2=QRY_SAMPLES2, r=REF_SAMPLES),
         expand('plot/integrated/{r}_{db}.png',
             r=REF_SAMPLES, db=DBS),
         expand('plot/integrated/{r}_{db}_2.png',
@@ -42,7 +46,7 @@ rule dimplot_rsample:
     log:
         'logs/dimplot_rsample_{r}.log'
     shell:
-        'src/dimplot_rsample.sh {input} {output} >& {log}'
+        'src/dimplot_rsample.sh {wildcards.r} {input} {output} >& {log}'
 
 rule dimplot_labeltransfer:
     input:
@@ -59,7 +63,7 @@ rule dimplot_labeltransfer:
     log:
         'logs/dimplot_labeltransfer_{q}_{r}.log'
     shell:
-        'src/dimplot_labeltransfer.sh {input} {output} >& {log}'
+        'src/dimplot_labeltransfer.sh {wildcards.r} {input} {output} >& {log}'
 
 rule dimplot_labeltransfer2:
     input:
@@ -76,7 +80,7 @@ rule dimplot_labeltransfer2:
     log:
         'logs/dimplot_labeltransfer_{q2}_{r}.log'
     shell:
-        'src/dimplot_labeltransfer.sh {input} {output} >& {log}'
+        'src/dimplot_labeltransfer.sh {wildcards.r} {input} {output} >& {log}'
 
 def aggregate_qsample(r):
     out = []
@@ -123,3 +127,41 @@ rule dimplot_labeltransfer_integrated2:
         'logs/dimplot_labeltransfer_integrated2_{r}_{db}.log'
     shell:
         'src/dimplot_labeltransfer_integrated2.sh {wildcards.db} {wildcards.r} {output} >& {log}'
+
+rule dimplot_integration:
+    input:
+        'output/{q}_vs_{r}/predictions.RData',
+        'output/{q}_vs_{r}/seurat.RData',
+        '../urchin-workflow2/output/echinobase/{q}/seurat_lt.RData',
+        'data/{r}/seurat.RData'
+    output:
+        'plot/{q}/{r}_integration.png'
+    wildcard_constraints:
+        q='|'.join([re.escape(x) for x in QRY_SAMPLES])
+    resources:
+        mem_gb=100
+    benchmark:
+        'benchmarks/dimplot_integration_{q}_{r}.txt'
+    log:
+        'logs/dimplot_integration_{q}_{r}.log'
+    shell:
+        'src/dimplot_integration.sh {wildcards.r} {input} {output} >& {log}'
+
+rule dimplot_integration2:
+    input:
+        'output/{q2}_vs_{r}/predictions.RData',
+        'output/{q2}_vs_{r}/seurat.RData',
+        '../urchin-workflow3/output/echinobase/{q2}/seurat_lt.RData',
+        'data/{r}/seurat.RData'
+    output:
+        'plot/{q2}/{r}_integration.png'
+    wildcard_constraints:
+        q2='|'.join([re.escape(x) for x in QRY_SAMPLES2])
+    resources:
+        mem_gb=100
+    benchmark:
+        'benchmarks/dimplot_integration_{q2}_{r}.txt'
+    log:
+        'logs/dimplot_integration_{q2}_{r}.log'
+    shell:
+        'src/dimplot_integration.sh {wildcards.r} {input} {output} >& {log}'

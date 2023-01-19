@@ -17,37 +17,37 @@ REF_SAMPLES = ['Sp_3dpf', 'Sp_2.75-28hpf', 'Sp_48_72hpf', 'Sp_Adult']
 
 rule all:
     input:
-        expand('output/{q}_vs_{r}/predictions.RData',
+        expand('output/{q}_vs_{r}/seurat.RData',
             q=QRY_SAMPLES, r=REF_SAMPLES),
-        expand('output/{q2}_vs_{r}/predictions.RData',
+        expand('output/{q2}_vs_{r}/seurat.RData',
             q2=QRY_SAMPLES2, r=REF_SAMPLES)
 
-rule labeltransfer:
+rule integration:
     input:
         '../urchin-workflow2/output/echinobase/{q}/seurat_lt.RData',
         'data/{r}/seurat.RData'
     output:
-        'output/{q}_vs_{r}/predictions.RData'
+        'output/{q}_vs_{r}/seurat.RData'
     resources:
         mem_gb=100
     benchmark:
-        'benchmarks/labeltransfer_{q}_{r}.txt'
+        'benchmarks/integration_{q}_{r}.txt'
     log:
-        'logs/labeltransfer_{q}_{r}.log'
+        'logs/integration_{q}_{r}.log'
     shell:
-        'src/labeltransfer.sh {input} {output} >& {log}'
+        'src/integration.sh {input} {output} >& {log}'
 
-rule labeltransfer2:
+rule integration2:
     input:
         '../urchin-workflow3/output/echinobase/{q2}/seurat_lt.RData',
         'data/{r}/seurat.RData'
     output:
-        'output/{q2}_vs_{r}/predictions.RData'
+        'output/{q2}_vs_{r}/seurat.RData'
     resources:
         mem_gb=100
     benchmark:
-        'benchmarks/labeltransfer_{q2}_{r}.txt'
+        'benchmarks/integration_{q2}_{r}.txt'
     log:
-        'logs/labeltransfer_{q2}_{r}.log'
+        'logs/integration_{q2}_{r}.log'
     shell:
-        'src/labeltransfer.sh {input} {output} >& {log}'
+        'src/integration.sh {input} {output} >& {log}'

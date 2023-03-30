@@ -26,5 +26,5 @@ seurat.integrated[["predicted.id"]] <- celltypes
 
 # Plot
 png(file=outfile, width=1200, height=600)
-DimPlot(seurat.integrated, reduction="umap", group.by="predicted.id", split.by="sample", pt.size=2, label.size=6, ncol=4, cols=cols)
+DimPlot(seurat.integrated, reduction="umap", group.by="predicted.id", split.by="sample", pt.size=2, label.size=6, ncol=5, cols=cols)
 dev.off()

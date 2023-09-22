@@ -4,3 +4,4 @@ snakemake -s workflow/preprocess.smk --rulegraph | dot -Tpng > plot/preprocess.p
 snakemake -s workflow/labeltransfer.smk --rulegraph | dot -Tpng > plot/labeltransfer.png
 snakemake -s workflow/integration.smk --rulegraph | dot -Tpng > plot/integration.png
 snakemake -s workflow/plot.smk --rulegraph | dot -Tpng > plot/plot.png
+snakemake -s workflow/kana.smk --rulegraph | dot -Tpng > plot/kana.png

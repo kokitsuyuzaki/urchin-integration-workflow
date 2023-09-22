@@ -23,6 +23,10 @@ This workflow consists of four workflows as follows:
 
 ![](https://github.com/kokitsuyuzaki/urchin-integration-workflow/blob/main/plot/plot.png?raw=true)
 
+- **workflow/kana.smk**: Converting Seurat object to SingleCellExperiment object
+
+![](https://github.com/kokitsuyuzaki/urchin-integration-workflow/blob/main/plot/kana.png?raw=true)
+
 ## Requirements
 - Bash: GNU bash, version 4.2.46(1)-release (x86_64-redhat-linux-gnu)
 - Snakemake: 6.5.3
@@ -37,26 +41,29 @@ snakemake -s workflow/preprocess.smk -j 4 --use-singularity
 snakemake -s workflow/labeltransfer.smk -j 4 --use-singularity
 snakemake -s workflow/integration.smk -j 4 --use-singularity
 snakemake -s workflow/plot.smk -j 4 --use-singularity
+snakemake -s workflow/kana.smk -j 4 --use-singularity
 ```
 
 ### In Open Grid Engine
 
 ```
-snakemake -s workflow/download.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
-snakemake -s workflow/preprocess.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
-snakemake -s workflow/labeltransfer.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
-snakemake -s workflow/integration.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
-snakemake -s workflow/plot.smk -j 32 --cluster qsub --latency-wait 600 --use-singularity
+snakemake -s workflow/download.smk -j 32 --cluster qsub --cluster-cancel qdel --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess.smk -j 32 --cluster qsub --cluster-cancel qdel --latency-wait 600 --use-singularity
+snakemake -s workflow/labeltransfer.smk -j 32 --cluster qsub --cluster-cancel qdel --latency-wait 600 --use-singularity
+snakemake -s workflow/integration.smk -j 32 --cluster qsub --cluster-cancel qdel --latency-wait 600 --use-singularity
+snakemake -s workflow/plot.smk -j 32 --cluster qsub --cluster-cancel qdel --latency-wait 600 --use-singularity
+snakemake -s workflow/kana.smk -j 32 --cluster qsub --cluster-cancel qdel --latency-wait 600 --use-singularity
 ```
 
 ### In Slurm
 
 ```
-snakemake -s workflow/download.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
-snakemake -s workflow/preprocess.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
-snakemake -s workflow/labeltransfer.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
-snakemake -s workflow/integration.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
-snakemake -s workflow/plot.smk -j 32 --cluster sbatch --latency-wait 600 --use-singularity
+snakemake -s workflow/download.smk -j 32 --cluster sbatch --cluster-cancel scancel --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess.smk -j 32 --cluster sbatch --cluster-cancel scancel --latency-wait 600 --use-singularity
+snakemake -s workflow/labeltransfer.smk -j 32 --cluster sbatch --cluster-cancel scancel --latency-wait 600 --use-singularity
+snakemake -s workflow/integration.smk -j 32 --cluster sbatch --cluster-cancel scancel --latency-wait 600 --use-singularity
+snakemake -s workflow/plot.smk -j 32 --cluster sbatch --cluster-cancel scancel --latency-wait 600 --use-singularity
+snakemake -s workflow/kana.smk -j 32 --cluster sbatch --cluster-cancel scancel --latency-wait 600 --use-singularity
 ```
 
 ## License

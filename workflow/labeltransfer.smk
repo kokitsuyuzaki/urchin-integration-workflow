@@ -13,12 +13,12 @@ QRY_SAMPLES = ['SeaUrchin-scRNA-01', 'SeaUrchin-scRNA-02', 'SeaUrchin-scRNA-03',
 
 QRY_SAMPLES2 = ['cont-24h', 'cont-36h', 'cont-48h', 'cont-72h', 'cont-96h', 'DAPT-24h', 'DAPT-36h', 'DAPT-48h', 'DAPT-72h', 'DAPT-96h']
 
-REF_SAMPLES = ['Sp_3dpf', 'Sp_2.75-28hpf', 'Sp_48_72hpf', 'Sp_Adult']
+REF_SAMPLES = ['Sp_2.75-28hpf', 'Sp_48_72hpf', 'Sp_Adult']
 
 rule all:
     input:
-        expand('output/{q}_vs_{r}/predictions.RData',
-            q=QRY_SAMPLES, r=REF_SAMPLES),
+        # expand('output/{q}_vs_{r}/predictions.RData',
+        #     q=QRY_SAMPLES, r=REF_SAMPLES),
         expand('output/{q2}_vs_{r}/predictions.RData',
             q2=QRY_SAMPLES2, r=REF_SAMPLES)
 
@@ -29,7 +29,7 @@ rule labeltransfer:
     output:
         'output/{q}_vs_{r}/predictions.RData'
     resources:
-        mem_gb=100
+        mem_mb=1000000
     benchmark:
         'benchmarks/labeltransfer_{q}_{r}.txt'
     log:
@@ -44,7 +44,7 @@ rule labeltransfer2:
     output:
         'output/{q2}_vs_{r}/predictions.RData'
     resources:
-        mem_gb=100
+        mem_mb=1000000
     benchmark:
         'benchmarks/labeltransfer_{q2}_{r}.txt'
     log:

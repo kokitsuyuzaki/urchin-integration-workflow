@@ -13,24 +13,24 @@ QRY_SAMPLES = ['SeaUrchin-scRNA-01', 'SeaUrchin-scRNA-02', 'SeaUrchin-scRNA-03',
 
 QRY_SAMPLES2 = ['cont-24h', 'cont-36h', 'cont-48h', 'cont-72h', 'cont-96h', 'DAPT-24h', 'DAPT-36h', 'DAPT-48h', 'DAPT-72h', 'DAPT-96h']
 
-REF_SAMPLES = ['Sp_3dpf', 'Sp_2.75-28hpf', 'Sp_48_72hpf', 'Sp_Adult']
+REF_SAMPLES = ['Sp_2.75-28hpf', 'Sp_48_72hpf', 'Sp_Adult']
 
-DBS = ['hpbase', 'echinobase']
+DBS = ['hpbase']
 
 rule all:
     input:
         expand('plot/{r}/dimplot_rsample.png',
             r=REF_SAMPLES),
-        expand('plot/{q}/{r}.png',
-            q=QRY_SAMPLES, r=REF_SAMPLES),
+        # expand('plot/{q}/{r}.png',
+        #     q=QRY_SAMPLES, r=REF_SAMPLES),
         expand('plot/{q2}/{r}.png',
             q2=QRY_SAMPLES2, r=REF_SAMPLES),
-        expand('plot/{q}/{r}_integration.png',
-            q=QRY_SAMPLES, r=REF_SAMPLES),
+        # expand('plot/{q}/{r}_integration.png',
+        #     q=QRY_SAMPLES, r=REF_SAMPLES),
         expand('plot/{q2}/{r}_integration.png',
             q2=QRY_SAMPLES2, r=REF_SAMPLES),
-        expand('plot/integrated/{r}_{db}.png',
-            r=REF_SAMPLES, db=DBS),
+        # expand('plot/integrated/{r}_{db}.png',
+        #     r=REF_SAMPLES, db=DBS),
         expand('plot/integrated/{r}_{db}_2.png',
             r=REF_SAMPLES, db=DBS)
 
@@ -40,7 +40,7 @@ rule dimplot_rsample:
     output:
         'plot/{r}/dimplot_rsample.png'
     resources:
-        mem_gb=100
+        mem_mb=1000000
     benchmark:
         'benchmarks/dimplot_rsample_{r}.txt'
     log:
@@ -57,7 +57,7 @@ rule dimplot_labeltransfer:
     wildcard_constraints:
         q='|'.join([re.escape(x) for x in QRY_SAMPLES])
     resources:
-        mem_gb=100
+        mem_mb=1000000
     benchmark:
         'benchmarks/dimplot_labeltransfer_{q}_{r}.txt'
     log:
@@ -68,13 +68,13 @@ rule dimplot_labeltransfer:
 rule dimplot_labeltransfer2:
     input:
         'output/{q2}_vs_{r}/predictions.RData',
-        '../urchin-workflow3/output/hpbase/{q2}/seurat.RData'
+        '../urchin-workflow3/output/hpbase/{q2}/seurat_annotated.RData'
     output:
         'plot/{q2}/{r}.png'
     wildcard_constraints:
         q2='|'.join([re.escape(x) for x in QRY_SAMPLES2])
     resources:
-        mem_gb=100
+        mem_mb=1000000
     benchmark:
         'benchmarks/dimplot_labeltransfer_{q2}_{r}.txt'
     log:
@@ -97,7 +97,7 @@ rule dimplot_labeltransfer_integrated:
         r='|'.join([re.escape(x) for x in REF_SAMPLES]),
         db='|'.join([re.escape(x) for x in DBS])
     resources:
-        mem_gb=100
+        mem_mb=1000000
     benchmark:
         'benchmarks/dimplot_labeltransfer_integrated_{r}_{db}.txt'
     log:
@@ -120,7 +120,7 @@ rule dimplot_labeltransfer_integrated2:
         r='|'.join([re.escape(x) for x in REF_SAMPLES]),
         db='|'.join([re.escape(x) for x in DBS])
     resources:
-        mem_gb=100
+        mem_mb=1000000
     benchmark:
         'benchmarks/dimplot_labeltransfer_integrated2_{r}_{db}.txt'
     log:
@@ -139,7 +139,7 @@ rule dimplot_integration:
     wildcard_constraints:
         q='|'.join([re.escape(x) for x in QRY_SAMPLES])
     resources:
-        mem_gb=100
+        mem_mb=1000000
     benchmark:
         'benchmarks/dimplot_integration_{q}_{r}.txt'
     log:
@@ -158,7 +158,7 @@ rule dimplot_integration2:
     wildcard_constraints:
         q2='|'.join([re.escape(x) for x in QRY_SAMPLES2])
     resources:
-        mem_gb=100
+        mem_mb=1000000
     benchmark:
         'benchmarks/dimplot_integration_{q2}_{r}.txt'
     log:

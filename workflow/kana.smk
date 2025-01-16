@@ -7,7 +7,7 @@ from snakemake.utils import min_version
 min_version("7.1.0")
 container: 'docker://koki/urchin_workflow_seurat:20221004'
 
-SAMPLES = ['Sp_3dpf', 'Sp_2.75-28hpf', 'Sp_48_72hpf', 'Sp_Adult']
+SAMPLES = ['Sp_2.75-28hpf', 'Sp_48_72hpf', 'Sp_Adult']
 
 rule all:
     input:
@@ -21,7 +21,7 @@ rule kana_sample:
     wildcard_constraints:
         sample='|'.join([re.escape(x) for x in SAMPLES])
     resources:
-        mem_gb=1000
+        mem_mb=1000000
     benchmark:
         'benchmarks/kana_{sample}.txt'
     log:

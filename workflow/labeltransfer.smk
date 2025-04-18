@@ -24,10 +24,12 @@ rule all:
 
 rule labeltransfer:
     input:
-        '../urchin-workflow2/output/echinobase/{q}/seurat_lt.RData',
+        'data/echinobase/{q}/seurat_lt.RData',
         'data/{r}/seurat.RData'
     output:
         'output/{q}_vs_{r}/predictions.RData'
+    wildcard_constraints:
+        q='|'.join([re.escape(x) for x in QRY_SAMPLES])
     resources:
         mem_mb=1000000
     benchmark:
@@ -39,10 +41,12 @@ rule labeltransfer:
 
 rule labeltransfer2:
     input:
-        '../urchin-workflow3/output/echinobase/{q2}/seurat_lt.RData',
+        'data/hpbase/{q2}/seurat_annotated_lt.RData',
         'data/{r}/seurat.RData'
     output:
         'output/{q2}_vs_{r}/predictions.RData'
+    wildcard_constraints:
+        q2='|'.join([re.escape(x) for x in QRY_SAMPLES2])
     resources:
         mem_mb=1000000
     benchmark:

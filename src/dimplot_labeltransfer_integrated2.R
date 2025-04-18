@@ -11,7 +11,7 @@ cols <- .colorList[[rsample]]
 # Loading
 celltypes <- c()
 for(i in seq_along(qsamples2)){
-	infile1 <- paste0("../urchin-workflow3/output/", db, "/", qsamples2[i], "/seurat_annotated.RData")
+	infile1 <- paste0("data/", db, "/", qsamples2[i], "/seurat_annotated_lt.RData")
 	infile2 <- paste0("output/", qsamples2[i], "_vs_", rsample, "/predictions.RData")
 	load(infile1)
 	load(infile2)
@@ -19,7 +19,7 @@ for(i in seq_along(qsamples2)){
 	seurat.obj <- AddMetaData(object=seurat.obj, metadata=predictions)
 	celltypes <- c(celltypes, seurat.obj@meta.data$predicted.id)
 }
-infile3 <- paste0("../urchin-workflow3/output/", db, "/integrated/seurat_annotated.RData")
+infile3 <- paste0("data/", db, "/integrated/seurat_annotated.RData")
 load(infile3)
 
 seurat.integrated[["predicted.id"]] <- celltypes

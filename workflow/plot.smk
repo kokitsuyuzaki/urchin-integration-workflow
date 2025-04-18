@@ -25,6 +25,10 @@ rule all:
         #     q=QRY_SAMPLES, r=REF_SAMPLES),
         expand('plot/{q2}/{r}.png',
             q2=QRY_SAMPLES2, r=REF_SAMPLES),
+        expand('plot/{q2}/heatmap_{r}.png',
+            q2=QRY_SAMPLES2, r=REF_SAMPLES),
+        expand('plot/integrated/heatmap_{r}_{db}_2.png',
+            r=REF_SAMPLES, db=DBS),
         # expand('plot/{q}/{r}_integration.png',
         #     q=QRY_SAMPLES, r=REF_SAMPLES),
         expand('plot/{q2}/{r}_integration.png',
@@ -68,7 +72,7 @@ rule dimplot_labeltransfer:
 rule dimplot_labeltransfer2:
     input:
         'output/{q2}_vs_{r}/predictions.RData',
-        '../urchin-workflow3/output/hpbase/{q2}/seurat_annotated.RData'
+        'data/hpbase/{q2}/seurat_annotated_lt.RData'
     output:
         'plot/{q2}/{r}.png'
     wildcard_constraints:
@@ -81,6 +85,23 @@ rule dimplot_labeltransfer2:
         'logs/dimplot_labeltransfer_{q2}_{r}.log'
     shell:
         'src/dimplot_labeltransfer.sh {wildcards.r} {input} {output} >& {log}'
+
+rule heatmap_labeltransfer2:
+    input:
+        'output/{q2}_vs_{r}/predictions.RData',
+        'data/hpbase/{q2}/seurat_annotated_lt.RData'
+    output:
+        'plot/{q2}/heatmap_{r}.png'
+    wildcard_constraints:
+        q2='|'.join([re.escape(x) for x in QRY_SAMPLES2])
+    resources:
+        mem_mb=1000000
+    benchmark:
+        'benchmarks/heatmap_labeltransfer_{q2}_{r}.txt'
+    log:
+        'logs/heatmap_labeltransfer_{q2}_{r}.log'
+    shell:
+        'src/heatmap_labeltransfer.sh {wildcards.r} {input} {output} >& {log}'
 
 def aggregate_qsample(r):
     out = []
@@ -128,11 +149,28 @@ rule dimplot_labeltransfer_integrated2:
     shell:
         'src/dimplot_labeltransfer_integrated2.sh {wildcards.db} {wildcards.r} {output} >& {log}'
 
+rule heatmap_labeltransfer_integrated2:
+    input:
+        aggregate_qsample2
+    output:
+        'plot/integrated/heatmap_{r}_{db}_2.png'
+    wildcard_constraints:
+        r='|'.join([re.escape(x) for x in REF_SAMPLES]),
+        db='|'.join([re.escape(x) for x in DBS])
+    resources:
+        mem_mb=1000000
+    benchmark:
+        'benchmarks/heatmap_labeltransfer_integrated2_{r}_{db}.txt'
+    log:
+        'logs/heatmap_labeltransfer_integrated2_{r}_{db}.log'
+    shell:
+        'src/heatmap_labeltransfer_integrated2.sh {wildcards.db} {wildcards.r} {output} >& {log}'
+
 rule dimplot_integration:
     input:
         'output/{q}_vs_{r}/predictions.RData',
         'output/{q}_vs_{r}/seurat.RData',
-        '../urchin-workflow2/output/echinobase/{q}/seurat_lt.RData',
+        'data/echinobase/{q}/seurat_lt.RData',
         'data/{r}/seurat.RData'
     output:
         'plot/{q}/{r}_integration.png'
@@ -151,7 +189,7 @@ rule dimplot_integration2:
     input:
         'output/{q2}_vs_{r}/predictions.RData',
         'output/{q2}_vs_{r}/seurat.RData',
-        '../urchin-workflow3/output/echinobase/{q2}/seurat_lt.RData',
+        'data/echinobase/{q2}/seurat_lt.RData',
         'data/{r}/seurat.RData'
     output:
         'plot/{q2}/{r}_integration.png'

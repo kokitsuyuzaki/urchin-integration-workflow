@@ -3,6 +3,8 @@ library("SeuratObject")
 library("xlsx")
 library("scTGIF")
 library("SingleCellExperiment")
+library("ggplot2")
+library("viridis")
 
 qsamples = c('SeaUrchin-scRNA-01', 'SeaUrchin-scRNA-02', 'SeaUrchin-scRNA-03',
     'SeaUrchin-scRNA-04', 'SeaUrchin-scRNA-05', 'SeaUrchin-scRNA-06',

@@ -12,9 +12,12 @@ load(infile2)
 r.seurat.obj <- seurat.obj
 
 # Label Transer
+DefaultAssay(q.seurat.obj) <- "RNA"
+DefaultAssay(r.seurat.obj) <- "RNA"
 common_features <- intersect(rownames(q.seurat.obj), rownames((r.seurat.obj)))
 anchors <- FindTransferAnchors(reference = r.seurat.obj, query = q.seurat.obj,
-    dims=1:30, features = common_features)
+    dims=1:30,
+    features = common_features)
 
 # Label Prediction
 predictions <- TransferData(anchorset = anchors, refdata = Idents(r.seurat.obj), dims = 1:30, k.weight=20)

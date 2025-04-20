@@ -39,7 +39,7 @@ rule integration:
 
 rule integration2:
     input:
-        '../urchin-workflow3/output/echinobase/{q2}/seurat_lt.RData',
+        'data/hpbase/{q2}/seurat_annotated_lt.RData',
         'data/{r}/seurat.RData'
     output:
         'output/{q2}_vs_{r}/seurat.RData'

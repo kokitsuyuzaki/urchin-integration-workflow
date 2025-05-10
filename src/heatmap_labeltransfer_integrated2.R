@@ -22,9 +22,14 @@ tbl <- table(our_celltypes, reported_celltypes)
 tbl <- tbl / rowSums(tbl)
 df <- as.data.frame(tbl)
 colnames(df) <- c("Ours", "Reported", "Rate")
-all_labels <- sort(union(df$Ours, df$Reported))
-df$Ours <- factor(df$Ours, levels = all_labels)
-df$Reported <- factor(df$Reported, levels = all_labels)
+if(rsample == "Sp_48_72hpf") {
+  df$Ours <- factor(df$Ours, levels = label_ours)
+  df$Reported <- factor(df$Reported, levels = label_reported)
+}else{
+  all_labels <- sort(unique(c(df$Ours, df$Reported)))
+  df$Ours <- factor(df$Ours, levels = all_labels)
+  df$Reported <- factor(df$Reported, levels = all_labels)
+}
 
 # Plot
 g <- ggplot(df, aes(x = Reported, y = Ours, fill = Rate)) +

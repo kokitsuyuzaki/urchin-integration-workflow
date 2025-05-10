@@ -91,3 +91,24 @@ qsamples2 = c('cont-24h', 'cont-36h', 'cont-48h', 'cont-72h', 'cont-96h', 'DAPT-
     'Skeleton' = rgb(255/255, 157/255, 0/255)
     )
 )
+
+label_ours <- c("Neurons", "Oral_ectoderm", "Ciliary_band", "Aboral_ectoderm", "Anus", "Stomach", "Stomach_Intestine", "Intestine", "Pancreas", "Endoderm", "Skeleton", "Pigment", "Blastocoelar_cell", "Non_skeleton_mesoderm", "Coelomic_pouch", "Germ_line_future", "uncharacterized")
+
+label_reported <- c("Serotoninergic_neurons_apical_plate1",
+"Serotoninergic_neurons_apical_plate2",
+"Apical_plate_proneural",
+"Ciliary_band_neurons1",
+"Ciliary_band_neurons2",
+"Ciliary_band_neurons3",
+"Apical_ectoderm",
+"Apical_plate_uncharacterized",
+"Oral_ectoderm_Mouth",
+"Lateral_ectoderm_right",
+"Aboral_ectoderm1",
+"Aboral_ectoderm2",
+"Mid-gut",
+"Skeleton",
+"Differentiated_pigment_cells",
+"Mitotic_pigment_cells",
+"Mesodermal_cells",
+"Ectoderm_uncharacterized")

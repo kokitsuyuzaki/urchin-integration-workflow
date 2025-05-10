@@ -5,8 +5,8 @@ rsample <- commandArgs(trailingOnly=TRUE)[1]
 infile1 <- commandArgs(trailingOnly=TRUE)[2]
 infile2 <- commandArgs(trailingOnly=TRUE)[3]
 outfile <- commandArgs(trailingOnly=TRUE)[4]
-# rsample <- "Sp_2.75-28hpf"
-# infile1 <- 'output/cont-24h_vs_Sp_2.75-28hpf/predictions.RData'
+# rsample <- "Sp_48_72hpf"
+# infile1 <- 'output/cont-24h_vs_Sp_48_72hpf/predictions.RData'
 # infile2 <- 'data/hpbase/cont-24h/seurat_annotated_lt.RData'
 
 # Loading
@@ -18,9 +18,14 @@ tbl <- table(seurat.obj$celltype, predictions$predicted.id)
 tbl <- tbl / rowSums(tbl)
 df <- as.data.frame(tbl)
 colnames(df) <- c("Ours", "Reported", "Rate")
-all_labels <- sort(union(df$Ours, df$Reported))
-df$Ours <- factor(df$Ours, levels = all_labels)
-df$Reported <- factor(df$Reported, levels = all_labels)
+if(rsample == "Sp_48_72hpf") {
+  df$Ours <- factor(df$Ours, levels = label_ours)
+  df$Reported <- factor(df$Reported, levels = label_reported)
+}else{
+  all_labels <- sort(unique(c(df$Ours, df$Reported)))
+  df$Ours <- factor(df$Ours, levels = all_labels)
+  df$Reported <- factor(df$Reported, levels = all_labels)
+}
 
 # Plot
 g <- ggplot(df, aes(x = Reported, y = Ours, fill = Rate)) +

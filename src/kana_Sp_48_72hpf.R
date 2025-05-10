@@ -10,8 +10,7 @@ load(infile)
 # Setting for kana
 sce <- as.SingleCellExperiment(seurat.obj)
 reducedDims(sce) <- SimpleList(tSNE=seurat.obj@reductions$tsne@cell.embeddings)
-counts(sce) <- NULL
-altExp(sce) <- NULL
+# counts(sce) <- NULL
 altExp(sce) <- NULL
 
 # Save
